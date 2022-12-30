@@ -53,4 +53,23 @@ function playSingleRound() {
     //need to also 
 }
 
-console.log(playSingleRound()[0])
+function game() {
+    let wins = 0; let losses = 0; let ties = 0; let roundArray; let gameReport;
+    for(let i=0; i < 5; i++){
+        roundArray = playSingleRound();
+        if (roundArray[1] === "win") {wins+=1}
+        else if (roundArray[1] === "loss") {losses+=1}
+        else if (roundArray[1] === "tie") {ties+=1}
+        else {console.log("Bad output from that round. Outcome (win/loss/tie) not added to running total.")}
+
+        console.log(roundArray[0])
+    }
+    if (wins > losses) {gameReport = "YOU WIN. The player has beaten the computer overall."}
+    else if (wins < losses) {gameReport = "YOU LOSE. The player has lost to the computer overall."}
+    else {gameReport = "TIE. The player has tied the computer overall."}
+    
+    let outcomes = [wins, losses, ties];
+    return [gameReport, outcomes];
+}
+
+console.log(game()[0])
