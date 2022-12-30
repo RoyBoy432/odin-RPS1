@@ -17,12 +17,13 @@ function getPlayerChoice() {
 //console.log(getComputerChoice())
 function playSingleRound() {
     let outcome; let finalReport;
-    let win = "win"; let loss = "loss";
+    let win = "win"; let loss = "loss"; let tie = "tie";
     computerSelection = getComputerChoice();
     playerSelection = getPlayerChoice();
     if (computerSelection === playerSelection) {
         finalReport = `It\'s a tie. Both players selected ${computerSelection}`;
-        return finalReport;
+        outcome = tie;
+        return [finalReport, outcome];
     }
     else if (computerSelection === "Rock") {
         if (playerSelection === "Paper") {outcome = win}
@@ -41,14 +42,15 @@ function playSingleRound() {
     }
     else {
         finalReport = "The computer is not playing Rock-Paper-Scissors.";
-        return finalReport;
+        return [finalReport, outcome];
     }
 
     if (outcome === win) {finalReport = `You win. ${playerSelection} beats ${computerSelection}.`}
     else if (outcome === loss) {finalReport = `You lose. ${computerSelection} beats ${playerSelection}.`}
     else {finalReport = "Someone is not playing Rock-Paper-Scissors (unknown logic error happened)."}
 
-    return finalReport;
+    return [finalReport, outcome];
+    //need to also 
 }
 
-console.log(playSingleRound())
+console.log(playSingleRound()[0])
