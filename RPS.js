@@ -15,11 +15,17 @@ function getPlayerChoice() {
 }
 
 //console.log(getComputerChoice())
-function playSingleRound() {
-    let outcome; let finalReport;
+function playSingleRound(inputString = "noUI") {
+    let outcome; let finalReport; let playerSelection; let computerSelection;
     let win = "win"; let loss = "loss"; let tie = "tie";
     computerSelection = getComputerChoice();
-    playerSelection = getPlayerChoice();
+    if (inputString === "noUI") {
+        playerSelection = getPlayerChoice();
+    }
+    else {
+        playerSelection = inputString;
+    }
+    
     if (computerSelection === playerSelection) {
         finalReport = `It\'s a tie. Both players selected ${computerSelection}`;
         outcome = tie;
@@ -49,6 +55,8 @@ function playSingleRound() {
     else if (outcome === loss) {finalReport = `You lose. ${computerSelection} beats ${playerSelection}.`}
     else {finalReport = "Someone is not playing Rock-Paper-Scissors (unknown logic error happened)."}
 
+    console.log(outcome);
+    console.log(finalReport);
     return [finalReport, outcome];
     //need to also 
 }
@@ -72,4 +80,16 @@ function game() {
     return [gameReport, outcomes];
 }
 
-console.log(game()[0])
+
+//console.log(game()[0])
+
+const btnR=document.querySelector("#R");const btnP=document.querySelector("#P");const btnS=document.querySelector("#S");
+btnR.addEventListener('click', function (e) {
+    playSingleRound("Rock")
+});
+btnP.addEventListener('click', function (e) {
+    playSingleRound("Paper")
+});
+btnS.addEventListener('click', function (e) {
+    playSingleRound("Scissors")
+});
