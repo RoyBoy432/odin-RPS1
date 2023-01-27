@@ -14,6 +14,7 @@ resultsDiv.appendChild(singleResultText);
 resultsDiv.appendChild(runningWins);resultsDiv.appendChild(runningLosses);resultsDiv.appendChild(runningTies);
 
 body.append(resultsDiv);
+let wins = 0; let losses = 0; let ties = 0; let roundArray; let gameReport;
 
 //const finalResultDiv = document.createElement('div');
 //finalResultDiv.classList.add('finalResult');
@@ -38,7 +39,8 @@ function playSingleRound(inputString = "noUI") {
     let win = "win"; let loss = "loss"; let tie = "tie";
     computerSelection = getComputerChoice();
     if (inputString === "noUI") {
-        playerSelection = getPlayerChoice();
+        undefined;
+        //playerSelection = getPlayerChoice();
     }
     else {
         playerSelection = inputString;
@@ -46,7 +48,7 @@ function playSingleRound(inputString = "noUI") {
     
     if (computerSelection === playerSelection) {
         finalReport = `It\'s a tie. Both players selected ${computerSelection}`;
-        outcome = tie;
+        outcome = tie; ties+=1;
         return [finalReport, outcome];
     }
     else if (computerSelection === "Rock") {
@@ -69,8 +71,8 @@ function playSingleRound(inputString = "noUI") {
         return [finalReport, outcome];
     }
 
-    if (outcome === win) {finalReport = `You win. ${playerSelection} beats ${computerSelection}.`}
-    else if (outcome === loss) {finalReport = `You lose. ${computerSelection} beats ${playerSelection}.`}
+    if (outcome === win) {finalReport = `You win. ${playerSelection} beats ${computerSelection}.`; wins+=1}
+    else if (outcome === loss) {finalReport = `You lose. ${computerSelection} beats ${playerSelection}.`;losses+=1}
     else {finalReport = "Someone is not playing Rock-Paper-Scissors (unknown logic error happened)."}
 
     //console.log(outcome);
@@ -81,41 +83,40 @@ function playSingleRound(inputString = "noUI") {
 }
 
 function game() {
+    let wins = 0; let losses = 0; let ties = 0; let roundArray; let gameReport;
     //create the buttons
-    //while True;
-    //Keep a tally
+    const btnR=document.querySelector("#R");const btnP=document.querySelector("#P");const btnS=document.querySelector("#S");
+    btnR.addEventListener('click', function (e) {
+        playSingleRound("Rock")
+    });
+    btnP.addEventListener('click', function (e) {
+        playSingleRound("Paper")
+    });
+    btnS.addEventListener('click', function (e) {
+        playSingleRound("Scissors")
+    });
+    //while True; THIS DID NOT WORK, it just broke the webpage instead
+    //Keep a tally 
     //if Wins >= 5 or Losses >= 5:
     //Remove and deactivate the buttons
     // Announce a winner
-    let wins = 0; let losses = 0; let ties = 0; let roundArray; let gameReport;
-    for(let i=0; i < 5; i++){
-        roundArray = playSingleRound();
-        if (roundArray[1] === "win") {wins+=1}
-        else if (roundArray[1] === "loss") {losses+=1}
-        else if (roundArray[1] === "tie") {ties+=1}
-        else {console.log("Bad output from that round. Outcome (win/loss/tie) not added to running total.")}
-
-        console.log(roundArray[0])
+    
+    while (true) {
+        if (losses >= 5 || wins >= 5) {
+            break;
+        }
+        
     }
+
     if (wins > losses) {gameReport = "YOU WIN. The player has beaten the computer overall."}
     else if (wins < losses) {gameReport = "YOU LOSE. The player has lost to the computer overall."}
     else {gameReport = "TIE. The player has tied the computer overall."}
     
     let outcomes = [wins, losses, ties];
-    
+    console.log(gameReport);
     return [gameReport, outcomes];
 }
 
-
+//game()
 //console.log(game()[0])
 
-const btnR=document.querySelector("#R");const btnP=document.querySelector("#P");const btnS=document.querySelector("#S");
-btnR.addEventListener('click', function (e) {
-    playSingleRound("Rock")
-});
-btnP.addEventListener('click', function (e) {
-    playSingleRound("Paper")
-});
-btnS.addEventListener('click', function (e) {
-    playSingleRound("Scissors")
-});

@@ -1,0 +1,20 @@
+    for(let i=0; i < 5; i++){
+        roundArray = playSingleRound();
+        if (roundArray[1] === "win") {wins+=1;runningWins=wins}
+        else if (roundArray[1] === "loss") {losses+=1;runningLosses=losses}
+        else if (roundArray[1] === "tie") {ties+=1;runningTies=ties}
+        else {console.log("Bad output from that round. Outcome (win/loss/tie) not added to running total.")}
+
+        console.log(roundArray[0])
+    }
+
+    const btnR=document.querySelector("#R");const btnP=document.querySelector("#P");const btnS=document.querySelector("#S");
+btnR.addEventListener('click', function (e) {
+    playSingleRound("Rock")
+});
+btnP.addEventListener('click', function (e) {
+    playSingleRound("Paper")
+});
+btnS.addEventListener('click', function (e) {
+    playSingleRound("Scissors")
+});
