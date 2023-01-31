@@ -52,22 +52,47 @@ function playSingleRound(inputString = "noUI", scopedScoreDict={}) {
     
     if (computerSelection === playerSelection) {
         finalReport = `It\'s a tie. Both players selected ${computerSelection}`;
-        outcome = tie; scopedScoreDict["ties"]+=1;
+        outcome = tie;
+        scopedScoreDict["ties"]+=1;
+        runningTies.textContent="Ties :"+String(scopedScoreDict["ties"]);
         return scopedScoreDict;
     }
     else if (computerSelection === "Rock") {
-        if (playerSelection === "Paper") {outcome = win; scopedScoreDict["wins"]+=1}
-        else if (playerSelection=== "Scissors") {outcome = loss; scopedScoreDict['losses']+=1}
+        if (playerSelection === "Paper") {
+            outcome = win;
+            scopedScoreDict["wins"]+=1;
+            runningWins.textContent="Wins: "+String(scopedScoreDict['wins'])
+        }
+        else if (playerSelection=== "Scissors") {
+            outcome = loss;
+            scopedScoreDict['losses']+=1;
+            runningLosses.textContent="Losses: "+String(scopedScoreDict['losses']);
+        }
         else {finalReport = "The player is not playing Rock-Paper-Scissors."}
     }
     else if (computerSelection === "Paper") {
-        if (playerSelection === "Scissors") {outcome = win; scopedScoreDict["wins"]+=1}
-        else if (playerSelection=== "Rock") {outcome = loss; scopedScoreDict['losses']+=1}
+        if (playerSelection === "Scissors") {
+            outcome = win;
+            scopedScoreDict["wins"]+=1;
+            runningWins.textContent="Wins: "+String(scopedScoreDict['wins']);
+        }
+        else if (playerSelection=== "Rock") {
+            outcome = loss;
+            scopedScoreDict['losses']+=1;
+            runningLosses.textContent="Losses: "+String(scopedScoreDict['losses'])}
         else {finalReport = "The player is not playing Rock-Paper-Scissors."}
     }
     else if (computerSelection === "Scissors") {
-        if (playerSelection === "Rock") {outcome = win; scopedScoreDict["wins"]+=1}
-        else if (playerSelection=== "Paper") {outcome = loss; scopedScoreDict['losses']+=1}
+        if (playerSelection === "Rock") {
+            outcome = win;
+            scopedScoreDict["wins"]+=1;
+            runningWins.textContent="Wins: "+String(scopedScoreDict['wins'])
+        }
+        else if (playerSelection=== "Paper") {
+            outcome = loss;
+            scopedScoreDict['losses']+=1;
+            runningLosses.textContent="Losses: "+String(scopedScoreDict['losses'])
+        }
         else {finalReport = "The player is not playing Rock-Paper-Scissors."}
     }
     else {
@@ -75,29 +100,36 @@ function playSingleRound(inputString = "noUI", scopedScoreDict={}) {
         return origDict;
     }
 
-    if (outcome === win) {finalReport = `You win. ${playerSelection} beats ${computerSelection}.`; wins+=1}
-    else if (outcome === loss) {finalReport = `You lose. ${computerSelection} beats ${playerSelection}.`;losses+=1}
+    if (outcome === win) {finalReport = `You win. ${playerSelection} beats ${computerSelection}.`}
+    else if (outcome === loss) {finalReport = `You lose. ${computerSelection} beats ${playerSelection}.`}
     else {finalReport = "Someone is not playing Rock-Paper-Scissors (unknown logic error happened)."}
 
     //console.log(outcome);
     singleResultText.textContent=`${finalReport}`;
     console.log(finalReport);
+
+    if (scopedScoreDict['wins']>=5 || scopedScoreDict['losses']>=5) {
+        undefined;
+        //end the game
+        //make the buttons stop working
+
+    }
     return scopedScoreDict;
     //need to also 
 }
 
 function game() {
-    let wins = 0; let losses = 0; let ties = 0; let roundArray; let gameReport;
+    //let wins = 0; let losses = 0; let ties = 0; let roundArray; let gameReport;
     //create the buttons
     const btnR=document.querySelector("#R");const btnP=document.querySelector("#P");const btnS=document.querySelector("#S");
     btnR.addEventListener('click', function (e) {
-        scoreDict = playSingleRound("Rock",scoreArray)
+        scoreDict = playSingleRound("Rock",scoreDict)
     });
     btnP.addEventListener('click', function (e) {
-        scoreDict = playSingleRound("Paper",scoreArray)
+        scoreDict = playSingleRound("Paper",scoreDict)
     });
     btnS.addEventListener('click', function (e) {
-        scoreDict = playSingleRound("Scissors",scoreArray)
+        scoreDict = playSingleRound("Scissors",scoreDict)
     });
     //while True; THIS DID NOT WORK, it just broke the webpage instead
     //Keep a tally 
@@ -105,22 +137,10 @@ function game() {
     //Remove and deactivate the buttons
     // Announce a winner
     
-    while (true) {
-        if (losses >= 5 || wins >= 5) {
-            break;
-        }
-        
-    }
-
-    if (wins > losses) {gameReport = "YOU WIN. The player has beaten the computer overall."}
-    else if (wins < losses) {gameReport = "YOU LOSE. The player has lost to the computer overall."}
-    else {gameReport = "TIE. The player has tied the computer overall."}
     
-    let outcomes = [wins, losses, ties];
-    console.log(gameReport);
-    return [gameReport, outcomes];
+    return;
 }
 
-//game()
+game()
 //console.log(game()[0])
 
