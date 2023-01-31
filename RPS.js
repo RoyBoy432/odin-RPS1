@@ -15,6 +15,8 @@ resultsDiv.appendChild(runningWins);resultsDiv.appendChild(runningLosses);result
 
 body.append(resultsDiv);
 let wins = 0; let losses = 0; let ties = 0; let roundArray; let gameReport;
+let scoreDict=new Object();
+scoreDict = {"wins": wins, "losses": losses, "ties": ties};
 
 //const finalResultDiv = document.createElement('div');
 //finalResultDiv.classList.add('finalResult');
@@ -33,8 +35,10 @@ function getPlayerChoice() {
     return playerSelection;
 }
 
+
 //console.log(getComputerChoice())
-function playSingleRound(inputString = "noUI") {
+function playSingleRound(inputString = "noUI", scopedScoreDict={}) {
+    let origDict = {...scopedScoreDict};
     let outcome; let finalReport; let playerSelection; let computerSelection;
     let win = "win"; let loss = "loss"; let tie = "tie";
     computerSelection = getComputerChoice();
@@ -48,27 +52,27 @@ function playSingleRound(inputString = "noUI") {
     
     if (computerSelection === playerSelection) {
         finalReport = `It\'s a tie. Both players selected ${computerSelection}`;
-        outcome = tie; ties+=1;
-        return [finalReport, outcome];
+        outcome = tie; scopedScoreDict["ties"]+=1;
+        return scopedScoreDict;
     }
     else if (computerSelection === "Rock") {
-        if (playerSelection === "Paper") {outcome = win}
-        else if (playerSelection=== "Scissors") {outcome = loss}
+        if (playerSelection === "Paper") {outcome = win; scopedScoreDict["wins"]+=1}
+        else if (playerSelection=== "Scissors") {outcome = loss; scopedScoreDict['losses']+=1}
         else {finalReport = "The player is not playing Rock-Paper-Scissors."}
     }
     else if (computerSelection === "Paper") {
-        if (playerSelection === "Scissors") {outcome = win}
-        else if (playerSelection=== "Rock") {outcome = loss}
+        if (playerSelection === "Scissors") {outcome = win; scopedScoreDict["wins"]+=1}
+        else if (playerSelection=== "Rock") {outcome = loss; scopedScoreDict['losses']+=1}
         else {finalReport = "The player is not playing Rock-Paper-Scissors."}
     }
     else if (computerSelection === "Scissors") {
-        if (playerSelection === "Rock") {outcome = win}
-        else if (playerSelection=== "Paper") {outcome = loss}
+        if (playerSelection === "Rock") {outcome = win; scopedScoreDict["wins"]+=1}
+        else if (playerSelection=== "Paper") {outcome = loss; scopedScoreDict['losses']+=1}
         else {finalReport = "The player is not playing Rock-Paper-Scissors."}
     }
     else {
         finalReport = "The computer is not playing Rock-Paper-Scissors.";
-        return [finalReport, outcome];
+        return origDict;
     }
 
     if (outcome === win) {finalReport = `You win. ${playerSelection} beats ${computerSelection}.`; wins+=1}
@@ -78,7 +82,7 @@ function playSingleRound(inputString = "noUI") {
     //console.log(outcome);
     singleResultText.textContent=`${finalReport}`;
     console.log(finalReport);
-    return [finalReport, outcome];
+    return scopedScoreDict;
     //need to also 
 }
 
@@ -87,13 +91,13 @@ function game() {
     //create the buttons
     const btnR=document.querySelector("#R");const btnP=document.querySelector("#P");const btnS=document.querySelector("#S");
     btnR.addEventListener('click', function (e) {
-        playSingleRound("Rock")
+        scoreDict = playSingleRound("Rock",scoreArray)
     });
     btnP.addEventListener('click', function (e) {
-        playSingleRound("Paper")
+        scoreDict = playSingleRound("Paper",scoreArray)
     });
     btnS.addEventListener('click', function (e) {
-        playSingleRound("Scissors")
+        scoreDict = playSingleRound("Scissors",scoreArray)
     });
     //while True; THIS DID NOT WORK, it just broke the webpage instead
     //Keep a tally 
