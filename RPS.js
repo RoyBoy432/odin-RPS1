@@ -51,10 +51,11 @@ function playSingleRound(inputString = "noUI", scopedScoreDict={}) {
     }
     
     if (computerSelection === playerSelection) {
-        finalReport = `It\'s a tie. Both players selected ${computerSelection}`;
+        finalReport = `It\'s a tie this round. Both players selected ${computerSelection}`;
         outcome = tie;
         scopedScoreDict["ties"]+=1;
         runningTies.textContent="Ties :"+String(scopedScoreDict["ties"]);
+        singleResultText.textContent=`${finalReport}`;
         return scopedScoreDict;
     }
     else if (computerSelection === "Rock") {
@@ -100,8 +101,8 @@ function playSingleRound(inputString = "noUI", scopedScoreDict={}) {
         return origDict;
     }
 
-    if (outcome === win) {finalReport = `You win. ${playerSelection} beats ${computerSelection}.`}
-    else if (outcome === loss) {finalReport = `You lose. ${computerSelection} beats ${playerSelection}.`}
+    if (outcome === win) {finalReport = `You win the round. ${playerSelection} beats ${computerSelection}.`}
+    else if (outcome === loss) {finalReport = `You lose the round. ${computerSelection} beats ${playerSelection}.`}
     else {finalReport = "Someone is not playing Rock-Paper-Scissors (unknown logic error happened)."}
 
     //console.log(outcome);
@@ -109,7 +110,15 @@ function playSingleRound(inputString = "noUI", scopedScoreDict={}) {
     console.log(finalReport);
 
     if (scopedScoreDict['wins']>=5 || scopedScoreDict['losses']>=5) {
-        undefined;
+        const btnR=document.querySelector("#R");const btnP=document.querySelector("#P");const btnS=document.querySelector("#S");
+        btnR.style.display='none';btnP.style.display='none';btnS.style.display='none';
+        if (scopedScoreDict['wins']>=5) {
+            singleResultText.textContent=`Max score reached. You won!`;
+        }
+        else if (scopedScoreDict['losses']>=5) {
+            singleResultText.textContent=`Max score reached. You lost.`;
+        }
+
         //end the game
         //make the buttons stop working
 
